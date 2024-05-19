@@ -4,8 +4,10 @@
   <div class="hero-content">
     <h1>Welcome to Envybees Global</h1>
     <p>Your one-stop shop for laptop sales and repairs</p>
-    <a href="{% url 'product:product' %}" class="btn">View Products</a>
-    <a href="{% url 'core:contact' %}" class="btn">Contact Us</a>
+    <div class="hero-btn">
+      <a href="{% url 'product:product' %}" class="btn">View Products</a>
+      <a href="{% url 'core:contact' %}" class="btn">Contact Us</a>
+    </div>
   </div>
 </section>
 

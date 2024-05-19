@@ -20,7 +20,7 @@
     {% endif %}
   </div>
 </div>
-
+<div class="btn-container">
 {% if product.web_link %}
 
 <a href="{{ product.web_link }}" class="btn">Buy from Amazon</a>
@@ -28,6 +28,7 @@
 {% endif %}
 
 <a href="{% url 'product:order' product.id %}" class="btn">Place an order</a>
+</div>
 
 {% if related_product %}
 <div class="featured-container">

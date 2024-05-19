@@ -1,0 +1,8 @@
+/* mediaqueries.css */
+
+@media screen and (max-width: 768px) {
+    .desktop-nav {
+      display: none;  /* Hide desktop nav on mobile */
+    }
+  }
+  

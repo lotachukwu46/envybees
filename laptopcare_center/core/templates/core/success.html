@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<section class="contact-success">
+    <h2>Thank You!</h2>
+    <p>Your message has been sent successfully. We will get back to you soon, or you can call us on<br> +234 816 324 8451</p>
+
+    <style>
+        body{
+            background-color: rgba(40, 255, 40, 0.1);
+        }
+        .contact-success {
+            text-align: center;  /* Center the content */
+            padding: 50px;  /* Add some padding */
+            margin: 0 auto;  /* Center the section horizontally */
+            max-width: 600px;  /* Limit the width of the section */
+        }
+
+        h2 {
+            font-size: 2em;  /* Increase heading size */
+            margin-bottom: 20px;  /* Add some space after the heading */
+        }
+
+        p {
+            font-size: 1.2em;  /* Increase paragraph size slightly */
+            line-height: 1.5;  /* Increase line spacing for readability */
+        }
+    </style>
+</section>
+{% endblock %}

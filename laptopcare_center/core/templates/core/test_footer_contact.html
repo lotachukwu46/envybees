@@ -1,0 +1,18 @@
+<!-- core/templates/core/test_footer_contact.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Footer Contact Form</title>
+</head>
+<body>
+    <h1>Test Footer Contact Form</h1>
+    <form method="post" action="{% url 'core:test_footer_contact' %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Your email address..." required>
+        <textarea rows="4" name="message" placeholder="Your message..." required></textarea>
+        <button type="submit">Send</button>
+    </form>
+</body>
+</html>

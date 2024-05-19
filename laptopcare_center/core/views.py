@@ -1,11 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from product.models import Category, Product
 from django.core.mail import send_mail
 from django.conf import settings
-from django.http import HttpResponse
+from .forms import ContactForm
 
 def index(request):
-    products = Product.objects.filter(is_sold=False)[0:6]
+    products = Product.objects.filter(is_sold=False)[:6]
     categories = Category.objects.all()
     return render(request, 'core/index.html', {
         'categories': categories,
@@ -20,28 +20,64 @@ def about(request):
 
 def contact(request):
     if request.method == 'POST':
-        send_contact_email(name=request.POST['name'], email=request.POST['email'], message=request.POST['message'])
-    return render(request, 'core/contact.html')
-
-def send_contact_email(name, email, message):
-    subject = 'New Contact Form Submission'
-    message = f'Name: {name}\nEmail: {email}\nMessage: {message}'
-    from_email = settings.EMAIL_HOST_USER
-    to_email = ['lotaodi46@gmail.com']
-    send_mail(subject, message, from_email, to_email)
-
-def send_email(request):
-    if request.method == 'POST':
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-
-        send_mail(
-            'Contact Form Submission',
-            f'Email: {email}\nMessage: {message}',
-            settings.EMAIL_HOST_USER,
-            ['lotaodi46@gmail.com'],
-            fail_silently=False,
-        )
-        return HttpResponse('Email sent successfully!')
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            full_message = f"Message from {name} ({email}):\n\n{message}"
+            send_mail(
+                f"Contact Form Submission: {name}",
+                full_message,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            return redirect('core:success')
     else:
-        return HttpResponse('Method not allowed')
+        form = ContactForm()
+    return render(request, 'core/contact.html', {'form': form})
+
+def success(request):
+    return render(request, 'core/success.html', {'message': 'Your contact form submission was successful!'})
+
+def footer_contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            full_message = f"Message from {name} ({email}):\n\n{message}"
+            send_mail(
+                f"Contact Form Submission: {name}",
+                full_message,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            return redirect('core:success')
+    else:
+        form = ContactForm()
+    return render(request, 'core/contact.html', {'form': form})
+
+def test_footer_contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            full_message = f"Message from {name} ({email}):\n\n{message}"
+            send_mail(
+                f"Contact Form Submission: {name}",
+                full_message,
+                settings.EMAIL_HOST_USER,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            return redirect('core:success')
+    else:
+        form = ContactForm()
+    return render(request, 'core/test_footer_contact.html', {'form': form})
+
